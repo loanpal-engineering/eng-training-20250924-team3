@@ -254,6 +254,10 @@ def quote_page(quote_id):
     if not user:
         flash("User not found.", "danger")
 
+    if user.user_type != 'superadmin':
+        flash("You do not have access to this page.", "danger")
+        return redirect(url_for('main.index'))
+
     quote = MortgageQuote.query.get(quote_id)
     if not quote:
         flash("Quote not found.", "danger")
